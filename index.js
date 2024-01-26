@@ -41,10 +41,29 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const fs = require('fs');
 
+function writeToFile(fileName, data) {
+    fs.writeFileSync(fileName, data);
+}
+
+function askQuestions() {
+    inquirer.prompt(questions)
+        .then(answers => {
+            console.log(answers);
+            const genMarkdown = generateMarkdown(answers);
+            writeToFile('readMe.md', genMarkdown);
+            console.log(genMarkdown);
+
+            const badge = renderLicenseBadge(license);
+            const licenseLink = renderLicenseLink(license);
+        });
+}
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    console.log('Automatic README generator!')
+    askQuestions()
+}
 
 // Function call to initialize app
 init();
